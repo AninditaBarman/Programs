@@ -29,7 +29,7 @@ public class LinkedList {
 			}			
 		}		
 	}
-	
+
 	public void appendNode(LinkedListNode head, LinkedListNode node)//append node at the end of linked list
 	{
 		if(head==null)
@@ -37,17 +37,14 @@ public class LinkedList {
 		else
 		{
 			LinkedListNode n= head;
-			if(n.getNext()==null)
-				n.setNext(node);
-			else			
-			{
-				while(n.getNext()!=null)
-					n=n.getNext();
-				n.setNext(node);
-			}			
+
+			while(n.getNext()!=null)
+				n=n.getNext();
+			n.setNext(node);
+
 		}
 	}
-	
+
 	public void deleteNode(LinkedListNode head, int pos)//given linked list head and position to delete from
 	{
 		if(head!=null)
@@ -74,7 +71,7 @@ public class LinkedList {
 			}
 		}
 	}
-	
+
 	public void reverse(LinkedListNode head)
 	{
 		if(head!=null && head.getNext()!=null)//because, to reverse, you should have at least two nodes.  
@@ -83,13 +80,13 @@ public class LinkedList {
 			LinkedListNode q= head.getNext();
 			head.setNext(null);//since, the original list's head becomes the last node in the reversed list
 			LinkedListNode t;
-			
+
 			while(p!=null && q!=null)
 			{
 				t= q.getNext();
 				q.setNext(p);
 				p=q;
-				
+
 				if(t!=null)
 				{
 					q=t;
@@ -102,7 +99,7 @@ public class LinkedList {
 			}			
 		}
 	}
-	
+
 	public static void main(String args[])
 	{
 		LinkedList ll= new LinkedList();
@@ -113,19 +110,19 @@ public class LinkedList {
 		LinkedListNode n4= new LinkedListNode(4);
 		LinkedListNode n5= new LinkedListNode(5);
 		LinkedListNode n6= new LinkedListNode(6);
-		
+
 		ll.appendNode(null, n1);
 		ll.appendNode(n1, n2);
 		ll.appendNode(n1, n3);
 		ll.appendNode(n1, n4);
 		ll.appendNode(n1, n6);
-		
+
 		ll.insertNode(n1, n5, 5);
 		ll.insertNode(n1, n0, 1);
 		ll.deleteNode(n0, 1);
 		ll.deleteNode(n1, 4);
 		ll.reverse(n1);
-		
+
 	}
-	
+
 }
