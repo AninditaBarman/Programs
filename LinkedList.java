@@ -1,6 +1,5 @@
 import java.util.HashMap;
 
-
 public class LinkedList {
 
 	public void insertNode(LinkedListNode head, LinkedListNode node, int pos)//given linked list head, node to insert, and position to insert
@@ -243,7 +242,93 @@ public class LinkedList {
 		}
 		return null;
 	}
-
+	
+	public LinkedListNode addTwoNumbers(LinkedListNode n1, LinkedListNode n2, int carry)//recursive
+	{
+		if(n1==null && n2==null && carry==0)
+			return null;
+		
+		int data= (n1==null? 0: n1.getData())+(n2==null? 0: n2.getData())+carry;
+		LinkedListNode result= new LinkedListNode(data%10);
+		LinkedListNode more= addTwoNumbers((n1!=null? n1.getNext(): null), (n2!=null? n2.getNext(): null), data/10);
+		result.setNext(more);
+		
+		return result;		
+	}
+	
+	public void detectLoop(LinkedListNode head)
+	{
+		if(head!=null)
+		{
+			LinkedListNode slow= head;
+			LinkedListNode fast= head;
+			boolean loopExists=false;
+			while(slow!=null && slow.getNext()!=null)
+			{
+				slow= slow.getNext();
+				fast= fast.getNext().getNext();
+				if(slow==fast)
+				{
+					System.out.println("Loop detected");
+					loopExists= true;
+					break;
+				}
+			}
+			if(loopExists)
+			{				
+				slow=head;
+				while(slow!=fast)
+				{
+					slow= slow.getNext();
+					fast=fast.getNext();					
+				}	
+				System.out.println("Loop starts at this node: "+slow.getData());
+			}
+			else
+				System.out.println("Loop doesnt exist");
+		}
+	}
+	
+	public boolean isPalindrome(LinkedListNode head)
+	{
+		if(head!=null)
+		{
+			if(head.getNext()==null)//just one digit=>palindrome
+				return true;
+			//now we will reverse the list and check if the number is palindrome
+			LinkedListNode p1=head;
+			LinkedListNode p2=head.getNext();
+			LinkedListNode t;
+			head.setNext(null);
+			LinkedListNode reversedHead=null;
+			while(p1!=null && p2!=null)
+			{
+				t= p2.getNext();
+				p2.setNext(p1);
+				p1= p2;
+				
+				if(t==null)
+				{
+					reversedHead=p1;
+					break;//V V I
+				}
+				else
+				{
+					p2= t;
+				}
+			}
+			while(head!=null && reversedHead!=null)
+			{
+				if(head.getData()!=reversedHead.getData())
+					return false;
+				head= head.getNext();
+				reversedHead= reversedHead.getNext();
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	public static void main(String args[])
 	{
 		LinkedList ll= new LinkedList();
@@ -261,27 +346,15 @@ public class LinkedList {
 		ll.appendNode(null, n1);
 		ll.appendNode(n1, n2);
 		ll.appendNode(n1, n3);
-		ll.appendNode(n1, n4);
-		ll.appendNode(n1, n6);
-
-		ll.insertNode(n1, n5, 5);
-		ll.insertNode(n1, n0, 1);
-		ll.deleteNode(n0, 1);
-		ll.deleteNode(n1, 4);
-		ll.reverse(n1);
-
-		ll.appendNode(n6, n7);//n6 becomes head after reversal
-		ll.appendNode(n6, n8);
-		ll.appendNode(n6, n9);
 		
-		//ll.partitionRearrange(n6, 4);
-		//ll.removeDuplicates(n6);
-		//ll.deleteDuplicatesWithoutBuffer(n6);
-		ll.kthToLast(n6, 1);
-		ll.kthToLast(n6, 8);
-		ll.partitionRearrange(n6, 4);
-		ll.deleteGivenNode(n6);
-		ll.deleteGivenNode(n1);
+		ll.appendNode(n1, n8);
+		ll.appendNode(n1, n7);
+		System.out.println(ll.isPalindrome(n1));
+		System.out.println();
+		
+		
+		
+		
 	}
 
 }
